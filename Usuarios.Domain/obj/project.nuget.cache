@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "yF588fDoDWU=",
+  "dgSpecHash": "88YBf33+pZ8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Esqueleto\\Usuarios-Microservice\\Usuarios.Domain\\Usuarios.Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Domain\\Usuarios.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\anale\\.nuget\\packages\\mediatr\\12.5.0\\mediatr.12.5.0.nupkg.sha512",
+    "C:\\Users\\anale\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\anale\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

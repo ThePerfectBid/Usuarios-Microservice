@@ -10,10 +10,19 @@
     <Folder Include="Database\" />
     <Folder Include="EventBus\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Configurations\" />
     <Folder Include="Contexts\" />
     <Folder Include="Settings\" />
-    <Folder Include="Persistence\Repository\Mongo\Documents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="3.1.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Usuarios.Application\Usuarios.Application.csproj" />
+    <ProjectReference Include="..\Usuarios.Domain\Usuarios.Domain.csproj" />
   </ItemGroup>
 
 </Project>

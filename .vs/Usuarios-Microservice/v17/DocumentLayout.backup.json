@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Esqueleto\\Usuarios-Microservice\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|solutionrelative:usuarios.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.API\\Program.cs",
+              "RelativeDocumentMoniker": "Usuarios.API\\Program.cs",
+              "ToolTip": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.API\\Program.cs",
+              "RelativeToolTip": "Usuarios.API\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACcAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T01:21:59.245Z",
+              "EditorCaption": ""
             }
           ]
         }

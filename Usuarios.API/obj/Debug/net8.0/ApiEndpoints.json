@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "CreateUser",
+    "RelativePath": "api/users/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDto",
+        "Type": "Usuarios.Application.DTOs.CreateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
