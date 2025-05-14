@@ -15,7 +15,7 @@ using Usuarios.Domain.ValueObjects;
 using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents;
 
-namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
+namespace Usuarios.Infrastructure.Persistence.Repository.MongoRead
 {
     public class MongoReadUserRepository : IUserReadRepository
     {

@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D152D58C-E3C7-47B2-B3CE-83C3671DEA46}|Usuarios.Infrastructure\\Usuarios.Infrastructure.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.infrastructure\\persistence\\repository\\mongoread\\mongoreaduserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D152D58C-E3C7-47B2-B3CE-83C3671DEA46}|Usuarios.Infrastructure\\Usuarios.Infrastructure.csproj|solutionrelative:usuarios.infrastructure\\persistence\\repository\\mongoread\\mongoreaduserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|solutionrelative:usuarios.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4325957A-471A-4B66-A484-8107B2319007}|Usuarios.API\\Usuarios.API.csproj|solutionrelative:usuarios.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D152D58C-E3C7-47B2-B3CE-83C3671DEA46}|Usuarios.Infrastructure\\Usuarios.Infrastructure.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.infrastructure\\persistence\\repository\\mongoread\\mongoreaduserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D152D58C-E3C7-47B2-B3CE-83C3671DEA46}|Usuarios.Infrastructure\\Usuarios.Infrastructure.csproj|solutionrelative:usuarios.infrastructure\\persistence\\repository\\mongoread\\mongoreaduserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D152D58C-E3C7-47B2-B3CE-83C3671DEA46}|Usuarios.Infrastructure\\Usuarios.Infrastructure.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.infrastructure\\persistence\\repository\\mongowrite\\mongowriteuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,7 +50,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.API\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Usuarios.API\\Controllers\\UserController.cs",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.API\\Program.cs",
               "RelativeDocumentMoniker": "Usuarios.API\\Program.cs",
@@ -71,18 +71,17 @@
               "RelativeToolTip": "Usuarios.API\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T14:32:16.263Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T14:32:16.263Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MongoReadUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoRead\\MongoReadUserRepository.cs",
               "RelativeDocumentMoniker": "Usuarios.Infrastructure\\Persistence\\Repository\\MongoRead\\MongoReadUserRepository.cs",
               "ToolTip": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoRead\\MongoReadUserRepository.cs",
               "RelativeToolTip": "Usuarios.Infrastructure\\Persistence\\Repository\\MongoRead\\MongoReadUserRepository.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAAAGwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-14T14:31:54.597Z",
               "EditorCaption": ""
@@ -97,8 +96,7 @@
               "RelativeToolTip": "Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\MongoWriteUserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T14:31:14.787Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T14:31:14.787Z"
             },
             {
               "$type": "Document",
@@ -110,8 +108,7 @@
               "RelativeToolTip": "Usuarios.Infrastructure\\Interfaces\\IUserReadRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T14:30:30.567Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T14:30:30.567Z"
             },
             {
               "$type": "Document",
@@ -123,8 +120,7 @@
               "RelativeToolTip": "Usuarios.Infrastructure\\Consumer\\UpdateUserConsumer.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T14:29:26.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T14:29:26.874Z"
             },
             {
               "$type": "Document",
@@ -136,8 +132,7 @@
               "RelativeToolTip": "Usuarios.Infrastructure\\Consumer\\UserConsumer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T14:28:52.185Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T14:28:52.185Z"
             }
           ]
         }
