@@ -24,5 +24,18 @@ namespace Usuarios.Presentation.Controllers
             var userId = await _mediator.Send(new CreateUserCommand(userDto));
             return CreatedAtAction(nameof(CreateUser), new { id = userId });
         }
+
+        [HttpPatch("update/{id}")]
+        public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] UpdateUserDto userDto)
+        {
+
+            var result = await _mediator.Send(new UpdateUserCommand(userDto, id));
+            if (!result)
+            {
+                return NotFound("El usuario no pudo ser actualizado.");
+            }
+
+            return Ok("Usuario actualizado exitosamente.");
+        }
     }
 }

@@ -12,6 +12,7 @@ using Usuarios.Infrastructure.Configurations;
 using System.Data;
 using Usuarios.Domain.Factories;
 using Usuarios.Domain.ValueObjects;
+using Usuarios.Application.DTOs;
 
 namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
 {
@@ -30,13 +31,13 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
         {
             var bsonUser = new BsonDocument
             {
-                { "_id", user.Id.Value },  // ID como String manejado por el sistema
+                { "_id", user.Id.Value }, // ID como String manejado por el sistema
                 { "name", user.Name.Value },
                 { "lastName", user.LastName.Value },
                 { "email", user.Email.Value },
                 { "address", user.Address?.Value ?? "" },
                 { "phone", user.Phone?.Value ?? "" },
-                { "roleId", user.RoleId.Value},  // Se almacena solo el ID del rol
+                { "roleId", user.RoleId.Value }, // Se almacena solo el ID del rol
                 //{ "isActive", true },
                 { "createdAt", DateTime.UtcNow },
                 { "updatedAt", DateTime.UtcNow }
@@ -66,38 +67,39 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
                 new VOPhone(bsonUser["phone"].AsString)
             );
         }
+
+
+        public async Task<User?> GetByIdAsync(string id)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var result = await _usersCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (result == null) return null;
+
+            return new User(
+                new VOId(result["_id"].AsString),
+                new VOName(result["name"].AsString),
+                new VOLastName(result["lastName"].AsString),
+                new VOEmail(result["email"].AsString),
+                new VORoleId(result["roleId"].AsString),
+                new VOAddress(result["address"].AsString),
+                new VOPhone(result["phone"].AsString)
+            );
+        }
+
+        public async Task UpdateAsync(User user)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", user.Id.Value);
+            var update = Builders<BsonDocument>.Update
+                .Set("name", user.Name.Value)
+                .Set("lastName", user.LastName.Value)
+                .Set("address", user.Address.Value)
+                .Set("phone", user.Phone.Value);
+
+            //await _usersCollection.UpdateOneAsync(filter, update);
+            var result = await _usersCollection.UpdateOneAsync(filter, update);
+            Console.WriteLine($"🔹 Documentos modificados: {result.ModifiedCount}");
+        }
+
     }
-
-        //public async Task<bool> UpdateUserById(string userId, string? name, string? lastName, string? phone)
-        //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-        //    var update = Builders<BsonDocument>.Update.Set("updatedAt", DateTime.UtcNow);
-
-        //    if (!string.IsNullOrWhiteSpace(name))
-        //        update = update.Set("name", name);
-
-        //    if (!string.IsNullOrWhiteSpace(lastName))
-        //        update = update.Set("lastName", lastName);
-
-        //    if (!string.IsNullOrWhiteSpace(phone))
-        //        update = update.Set("phone", phone);
-
-        //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-        //    return result.ModifiedCount > 0;
-        //}
-
-        //public async Task<bool> ToggleActivityUserById(string userId)
-        //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-        //    var user = await _usersCollection.Find(filter).FirstOrDefaultAsync();
-
-        //    if (user == null)
-        //        return false;
-
-        //    bool isActive = !user["isActive"].AsBoolean;
-        //    var update = Builders<BsonDocument>.Update.Set("isActive", isActive).Set("updatedAt", DateTime.UtcNow);
-
-        //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-        //    return result.ModifiedCount > 0;
-        //}
 }

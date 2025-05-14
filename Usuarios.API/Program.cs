@@ -10,7 +10,7 @@ using Usuarios.Infrastructure.Configurations;
 using Usuarios.Application.EventHandlers;
 using Usuarios.Domain.Events;
 using MassTransit;
-using Application.Core;
+using Usuarios.Infrastructure.Consumer;
 using Usuarios.Infrastructure.Persistence.Repository;
 using Usuarios.Infrastructure.Interfaces;
 
@@ -40,13 +40,14 @@ builder.Services.AddScoped<IUserReadRepository, MongoReadUserRepository>();
 builder.Services.AddScoped<IRoleReadRepository, RoleReadRepository>();
 
 // REGISTRA MediatR PARA TODOS LOS HANDLERS
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserCommandHandler).Assembly));
 
 
 
     builder.Services.AddMassTransit(busConfigurator =>
     {
         busConfigurator.AddConsumer<CreateUserConsumer>();
+        busConfigurator.AddConsumer<UpdateUserConsumer>();
         busConfigurator.SetKebabCaseEndpointNameFormatter();
         busConfigurator.UsingRabbitMq((context, configurator) =>
         {
@@ -57,14 +58,18 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
             });
 
             configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE"), e => {
-                e.ConfigureConsumer<CreateUserConsumer>(context); 
+                e.ConfigureConsumer<CreateUserConsumer>(context);
+            });
+            configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE"), e => {
+                e.ConfigureConsumer<UpdateUserConsumer>(context);
             });
 
             configurator.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
             configurator.ConfigureEndpoints(context);
         });
     });
-    EndpointConvention.Map<UserCreatedEvent>(new Uri("queue:user-queue"));
+    EndpointConvention.Map<UserCreatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE")));
+    EndpointConvention.Map<UserUpdatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE")));
 
 
 var app = builder.Build();

@@ -8,7 +8,7 @@ using Usuarios.Infrastructure.Interfaces;
 
 //using RabbitMQ.Contracts;
 
-namespace Application.Core
+namespace Usuarios.Infrastructure.Consumer
 {
     public class CreateUserConsumer(IServiceProvider serviceProvider, IUserReadRepository userReadRepository) : IConsumer<UserCreatedEvent>
     {

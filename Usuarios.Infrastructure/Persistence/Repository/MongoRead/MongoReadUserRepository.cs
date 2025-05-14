@@ -57,38 +57,53 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
                 Phone = bsonUser["phone"].AsString
             };
         }
+
+        public async Task UpdateAsync(BsonDocument user)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", user["_id"]);
+            var update = Builders<BsonDocument>.Update
+
+                .Set("name", user["name"])
+                .Set("lastName", user["lastName"])
+                .Set("address", user["address"])
+                .Set("phone", user["phone"]);
+
+            //await _usersCollection.UpdateOneAsync(filter, update);
+            var result = await _usersCollection.UpdateOneAsync(filter, update);
+            Console.WriteLine($"🔹 Documentos modificados: {result.ModifiedCount}");
+        }
     }
 
-        //public async Task<bool> UpdateUserById(string userId, string? name, string? lastName, string? phone)
-        //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-        //    var update = Builders<BsonDocument>.Update.Set("updatedAt", DateTime.UtcNow);
+    //public async Task<bool> UpdateUserById(string userId, string? name, string? lastName, string? phone)
+    //{
+    //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
+    //    var update = Builders<BsonDocument>.Update.Set("updatedAt", DateTime.UtcNow);
 
-        //    if (!string.IsNullOrWhiteSpace(name))
-        //        update = update.Set("name", name);
+    //    if (!string.IsNullOrWhiteSpace(name))
+    //        update = update.Set("name", name);
 
-        //    if (!string.IsNullOrWhiteSpace(lastName))
-        //        update = update.Set("lastName", lastName);
+    //    if (!string.IsNullOrWhiteSpace(lastName))
+    //        update = update.Set("lastName", lastName);
 
-        //    if (!string.IsNullOrWhiteSpace(phone))
-        //        update = update.Set("phone", phone);
+    //    if (!string.IsNullOrWhiteSpace(phone))
+    //        update = update.Set("phone", phone);
 
-        //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-        //    return result.ModifiedCount > 0;
-        //}
+    //    var result = await _usersCollection.UpdateOneAsync(filter, update);
+    //    return result.ModifiedCount > 0;
+    //}
 
-        //public async Task<bool> ToggleActivityUserById(string userId)
-        //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-        //    var user = await _usersCollection.Find(filter).FirstOrDefaultAsync();
+    //public async Task<bool> ToggleActivityUserById(string userId)
+    //{
+    //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
+    //    var user = await _usersCollection.Find(filter).FirstOrDefaultAsync();
 
-        //    if (user == null)
-        //        return false;
+    //    if (user == null)
+    //        return false;
 
-        //    bool isActive = !user["isActive"].AsBoolean;
-        //    var update = Builders<BsonDocument>.Update.Set("isActive", isActive).Set("updatedAt", DateTime.UtcNow);
+    //    bool isActive = !user["isActive"].AsBoolean;
+    //    var update = Builders<BsonDocument>.Update.Set("isActive", isActive).Set("updatedAt", DateTime.UtcNow);
 
-        //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-        //    return result.ModifiedCount > 0;
-        //}
+    //    var result = await _usersCollection.UpdateOneAsync(filter, update);
+    //    return result.ModifiedCount > 0;
+    //}
 }

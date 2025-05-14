@@ -15,13 +15,13 @@ using Usuarios.Domain.Events;
 
 namespace Usuarios.Application.Handlers
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, VOId>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, VOId>
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IMediator _mediator;
 
-        public CreateUserHandler(IUserRepository userRepository, IRoleRepository roleRepository, IMediator mediator)
+        public CreateUserCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, IMediator mediator)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _roleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));

@@ -15,6 +15,11 @@ namespace Usuarios.Infrastructure.Interfaces
     {
         Task AddAsync(BsonDocument User);
         Task<UserMongoRead> GetByEmailAsync(string email);
+        Task UpdateAsync(BsonDocument user);
+        //Task<UserMongoRead> GetByIdAsync(string id);
+        //Task<List<UserMongoRead>>? GetAllAsync();
+        //Task<UserMongoRead> GetByEmailAndIdAsync(string email, string id);
+
     }
 }
 
