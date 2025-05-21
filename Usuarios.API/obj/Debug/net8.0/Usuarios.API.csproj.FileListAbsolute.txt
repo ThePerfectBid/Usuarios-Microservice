@@ -22,12 +22,6 @@ C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usua
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets\msbuild.Usuarios.API.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets\msbuild.Usuarios.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets\msbuild.build.Usuarios.API.props
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Usuarios.API.props
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Usuarios.API.props
-C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\Usuarios.F3F7FE2F.Up2Date
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\Usuarios.API.dll
@@ -56,3 +50,4 @@ C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usua
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\bin\Debug\net8.0\MassTransit.Abstractions.dll
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\bin\Debug\net8.0\MassTransit.RabbitMqTransport.dll
 C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\anale\OneDrive\Documentos\UCAB\DESA\Proyecto\Usuarios-Microservice\Usuarios.API\obj\Debug\net8.0\staticwebassets.build.json.cache

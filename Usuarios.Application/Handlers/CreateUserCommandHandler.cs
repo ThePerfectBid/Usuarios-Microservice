@@ -15,7 +15,7 @@ using Usuarios.Domain.Events;
 
 namespace Usuarios.Application.Handlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, VOId>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
@@ -28,12 +28,17 @@ namespace Usuarios.Application.Handlers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<VOId> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<String> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             // Verificar si el ID del rol existe en la base de datos
             var roleExists = await _roleRepository.GetByIdAsync(request.UserDto.RoleId);
             if (roleExists == null)
                 throw new ArgumentException("El rol especificado no existe.");
+
+            // Verificar si el correo electrónico ya está registrado
+            var existingUser = await _userRepository.GetByEmailAsync(request.UserDto.Email);
+            if (existingUser != null)
+                throw new ArgumentException("El correo electrónico ya está registrado.");
 
             // Crear el usuario solo con el ID del rol
             var user = new User(
@@ -50,7 +55,7 @@ namespace Usuarios.Application.Handlers
             var userCreatedEvent = new UserCreatedEvent(user.Id.Value, user.Name.Value, user.LastName.Value, user.Email.Value, user.RoleId.Value, user.Address?.Value, user.Phone?.Value);
             await _mediator.Publish(userCreatedEvent); // Publicar el evento de usuario creado
 
-            return user.Id; // Extrae el valor primitivo antes de retornarlo
+            return user.Id.Value; // Extrae el valor primitivo antes de retornarlo
         }
     }
 }

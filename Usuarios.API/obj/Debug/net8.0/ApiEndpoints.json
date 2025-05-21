@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "GetByUserIdAsync",
+    "RelativePath": "api/users/{UserId}/activity",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
     "Method": "CreateUser",
     "RelativePath": "api/users/create",
     "HttpMethod": "POST",
@@ -10,6 +26,38 @@
       {
         "Name": "userDto",
         "Type": "Usuarios.Application.DTOs.CreateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "GetUserByEmail",
+    "RelativePath": "api/users/getuserbyemail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "PublishUserActivity",
+    "RelativePath": "api/users/publishActivity",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createuserActivityDto",
+        "Type": "Usuarios.Application.DTOs.CreateUserActivityDto",
         "IsRequired": true
       }
     ],

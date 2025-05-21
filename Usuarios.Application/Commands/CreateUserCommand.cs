@@ -12,7 +12,7 @@ namespace Usuarios.Application.Commands
     using MediatR;
     using Usuarios.Application.DTOs;
 
-    public class CreateUserCommand : IRequest<VOId> //aqui estaria calidad que se devuelva algo (yo devolvia el ID jose)
+    public class CreateUserCommand : IRequest<string>
     {
         public CreateUserDto UserDto { get; }
 

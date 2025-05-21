@@ -1,17 +1,18 @@
-﻿using System;
+﻿using MassTransit;
+using MediatR;
+using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using MassTransit;
+using System.Threading.Tasks;
 using Usuarios.Application.Commands;
-using Usuarios.Domain.Repositories;
-using Usuarios.Domain.Events;
 using Usuarios.Application.DTOs;
+using Usuarios.Application.Events;
+using Usuarios.Domain.Events;
+using Usuarios.Domain.Repositories;
 using Usuarios.Domain.ValueObjects;
 
 namespace Usuarios.Application.Handlers
@@ -44,6 +45,7 @@ namespace Usuarios.Application.Handlers
 
             var userUpdatedEvent = new UserUpdatedEvent(user.Id, user.Name, user.LastName, user.Address, user.Phone);
             await _publishEndpoint.Publish(userUpdatedEvent);
+            await _publishEndpoint.Publish(new UserActivityMadeEvent(user.Id.Value, "USER_UPDATED", DateTime.UtcNow));
 
             return true;
         }

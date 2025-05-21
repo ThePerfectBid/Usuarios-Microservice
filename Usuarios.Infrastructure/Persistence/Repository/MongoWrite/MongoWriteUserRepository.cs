@@ -94,7 +94,8 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
                 .Set("name", user.Name.Value)
                 .Set("lastName", user.LastName.Value)
                 .Set("address", user.Address.Value)
-                .Set("phone", user.Phone.Value);
+                .Set("phone", user.Phone.Value)
+                .Set("roleId", user.RoleId.Value);
 
             //await _usersCollection.UpdateOneAsync(filter, update);
             var result = await _usersCollection.UpdateOneAsync(filter, update);

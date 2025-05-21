@@ -19,9 +19,9 @@ namespace Usuarios.Application.EventHandlers
         {
             Console.WriteLine($"Usuario creado: {userCreatedEvent} con ID {userCreatedEvent}");
 
-            await _publishEndpoint.Send(userCreatedEvent); // 🔹 Publica el evento en RabbitMQ con MassTransit
+            await _publishEndpoint.Send(userCreatedEvent); //Publica el evento en RabbitMQ con MassTransit
         }
 
-        
+
     }
 }
