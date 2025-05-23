@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using Usuarios.Domain.Aggregates;
-using Usuarios.Domain.Entities;
-using Usuarios.Domain.Repositories;
+﻿using MongoDB.Driver;
 using MongoDB.Bson;
+using log4net;
+
+using Usuarios.Domain.Repositories;
+
 using Usuarios.Infrastructure.Configurations;
-using System.Data;
-using Usuarios.Domain.Factories;
-using Usuarios.Domain.ValueObjects;
 using Usuarios.Infrastructure.Interfaces;
 using Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents;
 
@@ -20,90 +13,153 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoRead
     public class MongoReadUserRepository : IUserReadRepository
     {
         private readonly IMongoCollection<BsonDocument> _usersCollection;
-        private readonly IRoleRepository _roleRepository; // Agregado para obtener el objeto Role
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(MongoReadUserRepository));
 
         public MongoReadUserRepository(MongoReadDbConfig mongoConfig, IRoleRepository roleRepository)
         {
             _usersCollection = mongoConfig.db.GetCollection<BsonDocument>("usuarios");
-            _roleRepository = roleRepository; // Inicialización del repositorio de roles
         }
 
+        #region AddAsync(BsonDocument user)
         public async Task AddAsync(BsonDocument user)
         {
+            _logger.Info($"Iniciando inserción de usuario con ID {user["_id"]}");
 
-
-            await _usersCollection.InsertOneAsync(user);
+            try
+            {
+                await _usersCollection.InsertOneAsync(user);
+                _logger.Info($"Usuario con ID {user["_id"]} insertado exitosamente en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al insertar usuario con ID {user["_id"]} en la base de datos.", ex);
+                throw;
+            }
         }
+        #endregion
 
+        #region GetByEmailAsync(string email)
         public async Task<UserMongoRead?> GetByEmailAsync(string email)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("email", email);
-            var bsonUser = await _usersCollection.Find(filter).FirstOrDefaultAsync();
+            _logger.Info($"Iniciando búsqueda de usuario con email {email}");
 
-            if (bsonUser == null)
-                return null;
-
-            // 🔹 Obtener el objeto Role desde MongoDB usando el RoleRepository
-
-
-            return new UserMongoRead
+            try
             {
-                Id = bsonUser["_id"].AsString,
-                Name = bsonUser["name"].AsString,
-                LastName = bsonUser["lastName"].AsString,
-                Email = bsonUser["email"].AsString,
-                roleId = bsonUser["roleId"].AsString,
-                Address = bsonUser["address"].AsString,
-                Phone = bsonUser["phone"].AsString
-            };
-        }
+                var filter = Builders<BsonDocument>.Filter.Eq("email", email);
+                var bsonUser = await _usersCollection.Find(filter).FirstOrDefaultAsync();
 
+                if (bsonUser == null)
+                {
+                    _logger.Warn($"No se encontró usuario con email {email}");
+                    return null;
+                }
+
+                var user = new UserMongoRead
+                {
+                    Id = bsonUser["_id"].AsString,
+                    Name = bsonUser["name"].AsString,
+                    LastName = bsonUser["lastName"].AsString,
+                    Email = bsonUser["email"].AsString,
+                    roleId = bsonUser["roleId"].AsString,
+                    Address = bsonUser["address"].AsString,
+                    Phone = bsonUser["phone"].AsString
+                };
+
+                _logger.Info($"Usuario con email {email} encontrado exitosamente.");
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al obtener usuario con email {email}", ex);
+                throw;
+            }
+        }
+        #endregion
+
+        #region UpdateAsync(BsonDocument user)
         public async Task UpdateAsync(BsonDocument user)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", user["_id"]);
-            var update = Builders<BsonDocument>.Update
+            _logger.Info($"Iniciando actualización de usuario con ID {user["_id"]}");
 
-                .Set("name", user["name"])
-                .Set("lastName", user["lastName"])
-                .Set("address", user["address"])
-                .Set("phone", user["phone"]);
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", user["_id"]);
+                var update = Builders<BsonDocument>.Update
+                    .Set("name", user["name"])
+                    .Set("lastName", user["lastName"])
+                    .Set("address", user["address"])
+                    .Set("phone", user["phone"])
+                    .Set("updatedAt", DateTime.UtcNow);
 
-            //await _usersCollection.UpdateOneAsync(filter, update);
-            var result = await _usersCollection.UpdateOneAsync(filter, update);
-            Console.WriteLine($"🔹 Documentos modificados: {result.ModifiedCount}");
+                var result = await _usersCollection.UpdateOneAsync(filter, update);
+
+                if (result.ModifiedCount == 0)
+                {
+                    _logger.Warn($"No se modificó ningún documento con ID {user["_id"]}");
+                    return;
+                }
+
+                _logger.Info($"Usuario con ID {user["_id"]} actualizado exitosamente. Documentos modificados: {result.ModifiedCount}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al actualizar usuario con ID {user["_id"]}", ex);
+                throw;
+            }
         }
+        #endregion
+
+        #region UpdateRoleIdById(BsonDocument user)
+        public async Task UpdateRoleIdById(BsonDocument user)
+        {
+            _logger.Info($"Iniciando actualización de RoleId para el usuario con ID {user["_id"]}");
+
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", user["_id"]);
+                var update = Builders<BsonDocument>.Update.Set("roleId", user["roleId"]);
+                var result = await _usersCollection.UpdateOneAsync(filter, update);
+
+                if (result.MatchedCount == 0)
+                {
+                    _logger.Warn($"No se encontró usuario con ID {user["_id"]} para actualizar el RoleId.");
+                    throw new KeyNotFoundException("No se encontró el usuario para actualizar el RoleId.");
+                }
+
+                _logger.Info($"Usuario con ID {user["_id"]} actualizado exitosamente. RoleId modificado.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al actualizar RoleId para el usuario con ID {user["_id"]}", ex);
+                throw;
+            }
+        }
+        #endregion
+
+        #region GetAllAsync
+        public async Task<List<BsonDocument>> GetAllAsync()
+        {
+            _logger.Info("Iniciando consulta para obtener todos los usuarios.");
+
+            try
+            {
+                var users = await _usersCollection.Find(_ => true).ToListAsync();
+
+                if (users == null || !users.Any())
+                {
+                    _logger.Warn("No se encontraron usuarios en la base de datos.");
+                    return new List<BsonDocument>();
+                }
+
+                _logger.Info($"Consulta completada exitosamente. Total usuarios: {users.Count}");
+                return users;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error al obtener la lista de usuarios.", ex);
+                throw;
+            }
+        }
+        #endregion
     }
-
-    //public async Task<bool> UpdateUserById(string userId, string? name, string? lastName, string? phone)
-    //{
-    //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-    //    var update = Builders<BsonDocument>.Update.Set("updatedAt", DateTime.UtcNow);
-
-    //    if (!string.IsNullOrWhiteSpace(name))
-    //        update = update.Set("name", name);
-
-    //    if (!string.IsNullOrWhiteSpace(lastName))
-    //        update = update.Set("lastName", lastName);
-
-    //    if (!string.IsNullOrWhiteSpace(phone))
-    //        update = update.Set("phone", phone);
-
-    //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-    //    return result.ModifiedCount > 0;
-    //}
-
-    //public async Task<bool> ToggleActivityUserById(string userId)
-    //{
-    //    var filter = Builders<BsonDocument>.Filter.Eq("_id", userId);
-    //    var user = await _usersCollection.Find(filter).FirstOrDefaultAsync();
-
-    //    if (user == null)
-    //        return false;
-
-    //    bool isActive = !user["isActive"].AsBoolean;
-    //    var update = Builders<BsonDocument>.Update.Set("isActive", isActive).Set("updatedAt", DateTime.UtcNow);
-
-    //    var result = await _usersCollection.UpdateOneAsync(filter, update);
-    //    return result.ModifiedCount > 0;
-    //}
 }

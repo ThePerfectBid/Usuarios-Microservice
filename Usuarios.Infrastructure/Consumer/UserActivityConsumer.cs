@@ -1,12 +1,9 @@
 ﻿using MassTransit;
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using log4net;
+
 using Usuarios.Application.Events;
-using Usuarios.Domain.Events;
+
 using Usuarios.Infrastructure.Interfaces;
 
 namespace Usuarios.Infrastructure.Consumer
@@ -14,25 +11,33 @@ namespace Usuarios.Infrastructure.Consumer
     public class UserActivityConsumer(IServiceProvider serviceProvider, IUserActivityReadRepository userActivityReadRepository) : IConsumer<UserActivityMadeEvent>
     {
         private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-        private readonly IUserActivityReadRepository _userReadRepository = userActivityReadRepository;
+        private readonly IUserActivityReadRepository _userActivityReadRepository = userActivityReadRepository;
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(UserActivityConsumer));
 
         public async Task Consume(ConsumeContext<UserActivityMadeEvent> @event)
         {
-            var message = @event.Message;
-            Console.WriteLine($"Historial actualizado: {message}");
+            _logger.Info($"Procesando UserActivityMadeEvent para usuario ID {@event.Message.UserId}");
 
-            var bsonUser = new BsonDocument
+            try
             {
-                { "_id", (Guid.NewGuid().ToString()) },
-                { "_userid", message.UserId },
-                { "message", message.Action},
-                { "timestamp", message.Timestamp}
-            };
+                var message = @event.Message;
 
-            await userActivityReadRepository.AddAsync(bsonUser);
+                var bsonUser = new BsonDocument
+                {
+                    { "_id", Guid.NewGuid().ToString() },
+                    { "_userid", message.UserId },
+                    { "message", message.Action },
+                    { "timestamp", message.Timestamp }
+                };
 
-            return; //Task.CompletedTask;
+                await _userActivityReadRepository.AddAsync(bsonUser);
+                _logger.Info($"Actividad de usuario ID {message.UserId} guardada exitosamente en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al procesar UserActivityMadeEvent para usuario ID {@event.Message.UserId}", ex);
+                throw;
+            }
         }
     }
 }

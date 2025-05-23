@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Usuarios.Domain.Entities;
-using Usuarios.Domain.ValueObjects;
+﻿using Usuarios.Domain.ValueObjects;
 
 namespace Usuarios.Domain.Aggregates
 {
@@ -19,7 +12,7 @@ namespace Usuarios.Domain.Aggregates
         public VOAddress? Address { get; private set; } // Opcional
         public VOPhone? Phone { get; private set; } // Opcional
 
-        private User() { } // Constructor privado para serialización
+        private User() { }
 
         public User(VOId id, VOName name, VOLastName lastName, VOEmail email, VORoleId roleid, VOAddress? address = null, VOPhone? phone = null)
         {
@@ -31,25 +24,33 @@ namespace Usuarios.Domain.Aggregates
             Phone = phone;
             RoleId = roleid;
         }
+
         public void Update(string? name, string? lastName, string? address = null, string? phone = null)
         {
             if (name != null)
             {
                 this.Name = new VOName(name);
             }
+
             if (lastName != null)
             {
                 this.LastName = new VOLastName(lastName);
             }
+
             if (address != null)
             {
                 this.Address = new VOAddress(address);
             }
+
             if (phone != null)
             {
                 this.Phone = new VOPhone(phone);
             }
+        }
 
+        public void UpdateRole(string newRoleId)
+        {
+            RoleId = new VORoleId(newRoleId);
         }
     }
 }

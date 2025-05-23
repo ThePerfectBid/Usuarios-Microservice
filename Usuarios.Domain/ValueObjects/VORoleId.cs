@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Usuarios.Domain.ValueObjects
+﻿namespace Usuarios.Domain.ValueObjects
 {
     public class VORoleId
     {

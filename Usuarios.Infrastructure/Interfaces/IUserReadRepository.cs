@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Usuarios.Domain.Aggregates;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
+
 using Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents;
 
 namespace Usuarios.Infrastructure.Interfaces
@@ -16,9 +9,8 @@ namespace Usuarios.Infrastructure.Interfaces
         Task AddAsync(BsonDocument User);
         Task<UserMongoRead> GetByEmailAsync(string email);
         Task UpdateAsync(BsonDocument user);
-        //Task<UserMongoRead> GetByIdAsync(string id);
-        //Task<List<UserMongoRead>>? GetAllAsync();
-        //Task<UserMongoRead> GetByEmailAndIdAsync(string email, string id);
+        Task UpdateRoleIdById(BsonDocument user);
+        Task<List<BsonDocument>> GetAllAsync();
 
     }
 }

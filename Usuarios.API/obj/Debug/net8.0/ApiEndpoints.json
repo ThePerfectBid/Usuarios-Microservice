@@ -17,8 +17,18 @@
   },
   {
     "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/users/allUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
     "Method": "CreateUser",
-    "RelativePath": "api/users/create",
+    "RelativePath": "api/users/createUser",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -29,6 +39,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "GetAllRoles",
+    "RelativePath": "api/users/GetallRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -56,7 +76,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createuserActivityDto",
+        "Name": "createUserActivityDto",
         "Type": "Usuarios.Application.DTOs.CreateUserActivityDto",
         "IsRequired": true
       }
@@ -79,6 +99,27 @@
       {
         "Name": "userDto",
         "Type": "Usuarios.Application.DTOs.UpdateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "UpdateUserRole",
+    "RelativePath": "api/users/updaterole/{userId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateUserRoleDto",
+        "Type": "Usuarios.Application.DTOs.UpdateUserRoleDto",
         "IsRequired": true
       }
     ],

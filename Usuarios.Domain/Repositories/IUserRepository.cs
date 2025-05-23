@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Usuarios.Domain.Aggregates;
+﻿using Usuarios.Domain.Aggregates;
 
 namespace Usuarios.Domain.Repositories
 {

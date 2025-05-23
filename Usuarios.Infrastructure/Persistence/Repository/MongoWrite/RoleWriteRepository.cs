@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
+﻿using log4net;
 using MongoDB.Bson;
+using MongoDB.Driver;
+
 using Usuarios.Domain.Entities;
 using Usuarios.Domain.Repositories;
 using Usuarios.Domain.ValueObjects;
+
 using Usuarios.Infrastructure.Configurations;
 
 namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
@@ -15,64 +13,76 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
     public class RoleWriteRepository : IRoleRepository
     {
         private readonly IMongoCollection<BsonDocument> _rolesCollection;
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(RoleWriteRepository));
 
         public RoleWriteRepository(MongoWriteDbConfig mongoConfig)
         {
             _rolesCollection = mongoConfig.db.GetCollection<BsonDocument>("Roles");
         }
 
+        #region GetByIdAsync(string roleId)
         public async Task<Role?> GetByIdAsync(string roleId)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId);
-            var bsonRole = await _rolesCollection.Find(filter).FirstOrDefaultAsync();
+            _logger.Info($"Iniciando búsqueda de rol con ID {roleId}");
 
-            if (bsonRole == null)
-                return null;
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId);
+                var bsonRole = await _rolesCollection.Find(filter).FirstOrDefaultAsync();
 
-            return new Role(
-                new VORoleId(bsonRole["_id"].AsString),
-                new VORoleName(bsonRole["RoleName"].AsString),
-                new VORolePermissions(bsonRole["PermissionIds"].AsBsonArray.Select(p => p.AsString).ToList())
-            );
+                if (bsonRole == null)
+                {
+                    _logger.Warn($"No se encontró rol con ID {roleId}");
+                    return null;
+                }
+
+                var role = new Role(
+                    new VORoleId(bsonRole["_id"].AsString),
+                    new VORoleName(bsonRole["RoleName"].AsString),
+                    new VORolePermissions(bsonRole["PermissionIds"].AsBsonArray.Select(p => p.AsString).ToList())
+                );
+
+                _logger.Info($"Rol con ID {roleId} obtenido exitosamente.");
+                return role;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al obtener rol con ID {roleId}", ex);
+                throw;
+            }
         }
+        #endregion
 
-        public async Task<List<Role>> GetAllAsync()
+        #region UpdateAsync(Role role)
+        public async Task<bool> UpdateAsync(Role role)
         {
-            var roles = await _rolesCollection.Find(new BsonDocument()).ToListAsync();
-            return roles.Select(bsonRole => new Role(
-                new VORoleId(bsonRole["_id"].AsString),
-                new VORoleName(bsonRole["RoleName"].AsString),
-                new VORolePermissions(bsonRole["PermissionIds"].AsBsonArray.Select(p => p.AsString).ToList())
-            )).ToList();
+            _logger.Info($"Iniciando actualización del rol con ID {role.Id.Value}");
+
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", role.Id.Value);
+                var update = Builders<BsonDocument>.Update
+                    .Set("PermissionIds", role.PermissionIds.PermissionIds)
+                    .Set("updatedAt", DateTime.UtcNow);
+
+                var result = await _rolesCollection.UpdateOneAsync(filter, update);
+
+                if (result.ModifiedCount == 0)
+                {
+                    _logger.Warn($"No se modificó ningún rol con ID {role.Id.Value}");
+                    return false;
+                }
+
+                _logger.Info($"Rol con ID {role.Id.Value} actualizado exitosamente. Documentos modificados: {result.ModifiedCount}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al actualizar rol con ID {role.Id.Value}", ex);
+                throw;
+            }
         }
+        #endregion
 
-        //public async Task AddAsync(Role role)
-        //{
-        //    var bsonRole = new BsonDocument
-        //    {
-        //        { "_id", role.Id.Value },
-        //        { "name", role.Name.Value },
-        //        { "permissions", new BsonArray(role.Permissions.Permissions) }
-        //    };
-
-        //    await _rolesCollection.InsertOneAsync(bsonRole);
-        //}
-
-        public async Task<bool> UpdatePermissionsAsync(VORoleId roleId, VORolePermissions permissions)
-        {
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId.Value);
-            var update = Builders<BsonDocument>.Update.Set("PermissionIds", new BsonArray(permissions.PermissionIds));
-
-            var result = await _rolesCollection.UpdateOneAsync(filter, update);
-            return result.ModifiedCount > 0;
-        }
-
-        //public async Task<bool> DeleteAsync(VORoleId roleId)
-        //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId.Value);
-        //    var result = await _rolesCollection.DeleteOneAsync(filter);
-
-        //    return result.DeletedCount > 0;
-        //}
     }
 }

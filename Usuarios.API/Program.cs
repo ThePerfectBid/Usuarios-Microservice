@@ -1,23 +1,32 @@
-﻿using MediatR;
-using DotNetEnv;
-using Microsoft.Extensions.DependencyInjection;
-using Usuarios.Application.Handlers; // Asegúrate de importar el namespace correcto
-using Usuarios.Infrastructure.Persistence;
-using Usuarios.Domain.Repositories;
-using MongoDB.Driver;
-using Usuarios.Infrastructure.Persistence.Repository.MongoWrite;
-using Usuarios.Infrastructure.Configurations;
-using Usuarios.Application.EventHandlers;
-using Usuarios.Domain.Events;
+﻿using DotNetEnv;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using log4net;
+using log4net.Config;
 using MassTransit;
+using System.Reflection;
+
+using Usuarios.API.Middlewares;
+
+using Usuarios.Application.EventHandlers;
 using Usuarios.Application.Events;
+using Usuarios.Application.Handlers;
+using Usuarios.Application.Validations;
+
+using Usuarios.Domain.Events;
 using Usuarios.Domain.Events.EventHandler;
-using Usuarios.Infrastructure.Persistence.Repository;
-using Usuarios.Infrastructure.Interfaces;
+using Usuarios.Domain.Repositories;
+
+using Usuarios.Infrastructure.Configurations;
 using Usuarios.Infrastructure.Consumer;
+using Usuarios.Infrastructure.Interfaces;
+using Usuarios.Infrastructure.Persistence.Repository;
 using Usuarios.Infrastructure.Persistence.Repository.MongoRead;
+using Usuarios.Infrastructure.Persistence.Repository.MongoWrite;
 using Usuarios.Infrastructure.Queries.QueryHandlers;
 
+var loggerRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,28 +46,43 @@ builder.Services.AddSingleton<MongoWriteDbConfig>();
 builder.Services.AddSingleton<MongoReadDbConfig>();
 builder.Services.AddSingleton<MongoReadUserActivityDbConfig>();
 
+// Registrar configuración de Log4Net
+builder.Services.AddSingleton(LogManager.GetLogger(typeof(Program)));
+
 // REGISTRA EL REPOSITORIO ANTES DE MediatR
 builder.Services.AddScoped<IUserRepository, MongoWriteUserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleWriteRepository>();
 builder.Services.AddScoped<IUserReadRepository, MongoReadUserRepository>();
 builder.Services.AddScoped<IRoleReadRepository, RoleReadRepository>();
 builder.Services.AddScoped<IUserActivityReadRepository, MongoReadUserActivityRepository>();
+
 // REGISTRA MediatR PARA TODOS LOS HANDLERS
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserCommandHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserRoleCommandHandler).Assembly));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserCreatedEventHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserUpdatedEventHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserRoleUpdatedEventHandler).Assembly));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserActivityQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserByEmailQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllRolesQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllUsersQueryHandler).Assembly));
 
-
-
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDtoValidation>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserDtoValidation>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserActivityDtoValidation>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserRoleDtoValidation>();
+builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddMassTransit(busConfigurator =>
 {
     busConfigurator.AddConsumer<CreateUserConsumer>();
     busConfigurator.AddConsumer<UpdateUserConsumer>();
     busConfigurator.AddConsumer<UserActivityConsumer>();
+    busConfigurator.AddConsumer<UserRoleUpdateConsumer>();
+
     busConfigurator.SetKebabCaseEndpointNameFormatter();
     busConfigurator.UsingRabbitMq((context, configurator) =>
     {
@@ -77,6 +101,9 @@ builder.Services.AddMassTransit(busConfigurator =>
         configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_ACTIVITY"), e => {
             e.ConfigureConsumer<UserActivityConsumer>(context);
         });
+        configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE_ROLE"), e => {
+            e.ConfigureConsumer<UserRoleUpdateConsumer>(context);
+        });
 
         configurator.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
         configurator.ConfigureEndpoints(context);
@@ -85,9 +112,12 @@ builder.Services.AddMassTransit(busConfigurator =>
 EndpointConvention.Map<UserCreatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE")));
 EndpointConvention.Map<UserUpdatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE")));
 EndpointConvention.Map<UserActivityMadeEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_ACTIVITY")));
+EndpointConvention.Map<UserRoleUpdatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE_ROLE")));
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

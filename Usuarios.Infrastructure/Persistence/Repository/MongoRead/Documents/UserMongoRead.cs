@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents
 {
@@ -31,17 +25,5 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents
 
         [BsonElement("phone")]
         public string? Phone { get; set; }
-
-        //[BsonElement("role")]
-        //public RoleMongoWrite Role { get; set; } // Relación con el rol del usuario
     }
-
-    //public class RoleMongoWrite
-    //{
-    //    [BsonElement("name")]
-    //    public string Name { get; set; }
-
-    //    [BsonElement("permissions")]
-    //    public List<string> Permissions { get; set; }
-    //}
 }

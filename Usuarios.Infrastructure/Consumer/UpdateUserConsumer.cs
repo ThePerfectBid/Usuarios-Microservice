@@ -1,11 +1,9 @@
 ﻿using MassTransit;
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using log4net;
+
 using Usuarios.Domain.Events;
+
 using Usuarios.Infrastructure.Interfaces;
 
 namespace Usuarios.Infrastructure.Consumer
@@ -13,25 +11,34 @@ namespace Usuarios.Infrastructure.Consumer
     public class UpdateUserConsumer(IServiceProvider serviceProvider, IUserReadRepository userReadRepository) : IConsumer<UserUpdatedEvent>
     {
         private readonly IServiceProvider _serviceProvider = serviceProvider;
-
         private readonly IUserReadRepository _userReadRepository = userReadRepository;
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(UpdateUserConsumer));
+
         public async Task Consume(ConsumeContext<UserUpdatedEvent> @event)
         {
-            var message = @event.Message;
-            Console.WriteLine($"Usuario creado: {message}");
+            _logger.Info($"Procesando UserUpdatedEvent para usuario ID {@event.Message.UserId.Value}");
 
-            var bsonUser = new BsonDocument
+            try
             {
-                { "_id", message.UserId.Value},
-                { "name", message.Name.Value},
-                { "lastName", message.LastName.Value},
-                { "address", message.Address.Value},
-                { "phone", message.Phone.Value}
-            };
+                var message = @event.Message;
 
-            await userReadRepository.UpdateAsync(bsonUser);
+                var bsonUser = new BsonDocument
+                {
+                    { "_id", message.UserId.Value },
+                    { "name", message.Name.Value },
+                    { "lastName", message.LastName.Value },
+                    { "address", message.Address.Value },
+                    { "phone", message.Phone.Value }
+                };
 
-            return; //Task.CompletedTask;
+                await _userReadRepository.UpdateAsync(bsonUser);
+                _logger.Info($"Usuario ID {message.UserId.Value} actualizado exitosamente en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al procesar UserUpdatedEvent para usuario ID {@event.Message.UserId.Value}", ex);
+                throw;
+            }
         }
     }
 }

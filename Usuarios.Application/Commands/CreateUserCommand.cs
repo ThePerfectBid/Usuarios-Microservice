@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
+
 using Usuarios.Application.DTOs;
-using Usuarios.Domain.ValueObjects;
 
 namespace Usuarios.Application.Commands
 {
-    using MediatR;
-    using Usuarios.Application.DTOs;
 
-    public class CreateUserCommand : IRequest<string>
+    public class CreateUserCommand : IRequest<String>
     {
         public CreateUserDto UserDto { get; }
 
