@@ -10,5 +10,7 @@ namespace Usuarios.Infrastructure.Interfaces
     {
         Task<Role?> GetByIdAsync(string roleId); // Obtener un rol por su ID
         Task<List<RoleDto>> GetAllAsync();  // Obtener todos los roles
+        Task<bool> AddPermissionsAsync(BsonDocument role); // Modificar permisos
+        Task RemovePermissionByIdAsync(string roleId, string permissionId);
     }
 }

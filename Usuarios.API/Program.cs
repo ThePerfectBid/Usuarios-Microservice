@@ -60,10 +60,14 @@ builder.Services.AddScoped<IUserActivityReadRepository, MongoReadUserActivityRep
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserCommandHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserCommandHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserRoleCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddPermissionToRoleCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RemovePermissionFromRoleCommandHandler).Assembly));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserCreatedEventHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserUpdatedEventHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserRoleUpdatedEventHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(PermissionAddedToRoleEventHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(PermissionRemovedFromRoleEventHandler).Assembly));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserActivityQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserByEmailQueryHandler).Assembly));
@@ -82,6 +86,8 @@ builder.Services.AddMassTransit(busConfigurator =>
     busConfigurator.AddConsumer<UpdateUserConsumer>();
     busConfigurator.AddConsumer<UserActivityConsumer>();
     busConfigurator.AddConsumer<UserRoleUpdateConsumer>();
+    busConfigurator.AddConsumer<PermissionAddedToRoleConsumer>();
+    busConfigurator.AddConsumer<PermissionRemovedFromRoleConsumer>();
 
     busConfigurator.SetKebabCaseEndpointNameFormatter();
     busConfigurator.UsingRabbitMq((context, configurator) =>
@@ -104,6 +110,12 @@ builder.Services.AddMassTransit(busConfigurator =>
         configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE_ROLE"), e => {
             e.ConfigureConsumer<UserRoleUpdateConsumer>(context);
         });
+        configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_ADD_ROLE_PERMISSION"), e => {
+            e.ConfigureConsumer<PermissionAddedToRoleConsumer>(context);
+        });
+        configurator.ReceiveEndpoint(Environment.GetEnvironmentVariable("RABBIT_QUEUE_REMOVE_ROLE_PERMISSION"), e => {
+            e.ConfigureConsumer<PermissionRemovedFromRoleConsumer>(context);
+        });
 
         configurator.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
         configurator.ConfigureEndpoints(context);
@@ -113,6 +125,8 @@ EndpointConvention.Map<UserCreatedEvent>(new Uri("queue:" + Environment.GetEnvir
 EndpointConvention.Map<UserUpdatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE")));
 EndpointConvention.Map<UserActivityMadeEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_ACTIVITY")));
 EndpointConvention.Map<UserRoleUpdatedEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_UPDATE_ROLE")));
+EndpointConvention.Map<PermissionAddedToRoleEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_ADD_ROLE_PERMISSION")));
+EndpointConvention.Map<PermissionRemovedFromRoleEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_REMOVE_ROLE_PERMISSION")));
 
 
 var app = builder.Build();

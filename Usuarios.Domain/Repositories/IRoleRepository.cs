@@ -7,5 +7,6 @@ namespace Usuarios.Domain.Repositories
     {
         Task<Role?> GetByIdAsync(string roleId); // Obtener un rol por su ID
         Task<bool> UpdateAsync(Role role); // Actualizar rol
+        Task<bool> AddPermissionsAsync(VORoleId roleId, VORolePermissions permissionId); // Agregar permisos a un rol
     }
 }

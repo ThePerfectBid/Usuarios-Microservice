@@ -6,7 +6,7 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoRead.Documents
     {
         [BsonId]
         [BsonElement("id")]
-        public required string Id { get; set; } // El ID es un string manejado por el sistema
+        public required string Id { get; set; }
 
         [BsonElement("name")]
         public required string Name { get; set; }

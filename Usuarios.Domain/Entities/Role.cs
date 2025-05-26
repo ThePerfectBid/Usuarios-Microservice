@@ -14,5 +14,18 @@ namespace Usuarios.Domain.Entities
             Name = name;
             PermissionIds = permissionIds;
         }
+
+        public void AddPermission(string permissionId)
+        {
+            if (!PermissionIds.HasPermission(permissionId))
+            {
+                PermissionIds.PermissionIds.Add(permissionId);
+            }
+        }
+
+        public void RemovePermission(string permissionId)
+        {
+            PermissionIds.PermissionIds.Remove(permissionId);
+        }
     }
 }

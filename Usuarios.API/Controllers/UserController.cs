@@ -240,6 +240,63 @@ namespace Usuarios.Presentation.Controllers
             }
         }
         #endregion
+
+        #region AddPermissionsToRole
+        [HttpPost("{roleId}/add-permission/{permissionId}")]
+        public async Task<IActionResult> AddPermissionToRole(string roleId, string permissionId)
+        {
+            _logger.Info($"Iniciando solicitud POST /api/roles/{roleId}/add-permission/{permissionId}");
+
+            try
+            {
+                var command = new AddPermissionToRoleCommand(roleId, permissionId);
+                var result = await _mediator.Send(command);
+
+                if (!result)
+                {
+                    _logger.Warn($"Error al agregar el permiso {permissionId} al rol {roleId}.");
+                    return BadRequest("Error al agregar el permiso.");
+                }
+
+                _logger.Info($"Permiso {permissionId} agregado correctamente al rol {roleId}.");
+                return Ok("Permiso agregado correctamente al rol.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error interno al agregar permiso {permissionId} al rol {roleId}", ex);
+                return StatusCode(500, "Error interno en el servidor.");
+            }
+        }
+        #endregion
+
+        #region RemovePermissionFromRole
+        [HttpDelete("{roleId}/remove-permission/{permissionId}")]
+        public async Task<IActionResult> RemovePermissionFromRole(string roleId, string permissionId)
+        {
+            _logger.Info($"Iniciando solicitud DELETE /api/roles/{roleId}/remove-permission/{permissionId}");
+
+            try
+            {
+                var command = new RemovePermissionFromRoleCommand(roleId, permissionId);
+                var result = await _mediator.Send(command);
+
+                if (!result)
+                {
+                    _logger.Warn($"Error al eliminar el permiso {permissionId} del rol {roleId}.");
+                    return BadRequest("Error al eliminar el permiso.");
+                }
+
+                _logger.Info($"Permiso {permissionId} eliminado correctamente del rol {roleId}.");
+                return Ok("Permiso eliminado correctamente del rol.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error interno al eliminar permiso {permissionId} del rol {roleId}", ex);
+                return StatusCode(500, "Error interno en el servidor.");
+            }
+        }
+        #endregion
+
     }
 
 }

@@ -1,6 +1,48 @@
 [
   {
     "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "AddPermissionToRole",
+    "RelativePath": "api/users/{roleId}/add-permission/{permissionId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "permissionId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
+    "Method": "RemovePermissionFromRole",
+    "RelativePath": "api/users/{roleId}/remove-permission/{permissionId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "permissionId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Usuarios.Presentation.Controllers.UsersController",
     "Method": "GetByUserIdAsync",
     "RelativePath": "api/users/{UserId}/activity",
     "HttpMethod": "GET",

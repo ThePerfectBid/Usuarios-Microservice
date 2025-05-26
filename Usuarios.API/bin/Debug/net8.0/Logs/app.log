@@ -373,3 +373,32 @@ System.Collections.Generic.KeyNotFoundException: Usuario no encontrado.
 2025-05-22 21:09:41,310 [INFO] Consulta completada exitosamente. Total actividades encontradas: 2
 2025-05-22 21:09:41,311 [INFO] Consulta completada exitosamente. Total actividades: 2
 2025-05-22 21:09:41,311 [INFO] Actividades obtenidas exitosamente para el usuario con ID: b5ade5f0-e932-49bb-9b95-dacccec779fa
+2025-05-26 12:40:57,936 [INFO] Iniciando solicitud POST /api/roles/6818b9e5035415cfcd8aa231/add-permission/6818b269035415cfcd8aa21c
+2025-05-26 12:40:58,470 [INFO] Conexión a MongoDB establecida correctamente.
+2025-05-26 12:40:58,479 [INFO] Procesando comando AddPermissionToRole para el rol 6818b9e5035415cfcd8aa231 con permiso 6818b269035415cfcd8aa21c
+2025-05-26 12:40:58,483 [INFO] Iniciando búsqueda de rol con ID 6818b9e5035415cfcd8aa231
+2025-05-26 12:40:59,852 [INFO] Rol con ID 6818b9e5035415cfcd8aa231 obtenido exitosamente.
+2025-05-26 12:40:59,853 [INFO] Iniciando actualización de permisos para el rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:40:59,999 [INFO] Permisos actualizados exitosamente para el rol 6818b9e5035415cfcd8aa231. Documentos modificados: 1
+2025-05-26 12:40:59,999 [INFO] Permiso 6818b269035415cfcd8aa21c agregado exitosamente al rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:01,404 [INFO] Evento publicado: Permiso 6818b269035415cfcd8aa21c agregado al rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:01,404 [INFO] Permiso 6818b269035415cfcd8aa21c agregado correctamente al rol 6818b9e5035415cfcd8aa231.
+2025-05-26 12:41:01,458 [INFO] Conexión a MongoDB establecida correctamente.
+2025-05-26 12:41:01,462 [INFO] Procesando PermissionAddedToRoleEvent para rol ID 6818b9e5035415cfcd8aa231, permiso ID 6818b269035415cfcd8aa21c
+2025-05-26 12:41:01,463 [INFO] Iniciando actualización de permisos para el rol con ID 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:01,536 [INFO] Permisos actualizados exitosamente para el rol con ID 6818b9e5035415cfcd8aa231. Documentos modificados: 1
+2025-05-26 12:41:01,536 [INFO] Permiso ID 6818b269035415cfcd8aa21c agregado exitosamente al rol ID 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:52,850 [INFO] Iniciando solicitud DELETE /api/roles/6818b9e5035415cfcd8aa231/remove-permission/6818b269035415cfcd8aa21c
+2025-05-26 12:41:52,852 [INFO] Procesando comando RemovePermissionFromRole para el rol 6818b9e5035415cfcd8aa231 con permiso 6818b269035415cfcd8aa21c
+2025-05-26 12:41:52,853 [INFO] Iniciando búsqueda de rol con ID 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:52,918 [INFO] Rol con ID 6818b9e5035415cfcd8aa231 obtenido exitosamente.
+2025-05-26 12:41:52,918 [INFO] Permiso 6818b269035415cfcd8aa21c removido del rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:52,920 [INFO] Iniciando actualización del rol con ID 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:53,000 [INFO] Rol con ID 6818b9e5035415cfcd8aa231 actualizado exitosamente. Documentos modificados: 1
+2025-05-26 12:41:53,000 [INFO] Cambios persistidos en el rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:53,701 [INFO] Evento publicado: Permiso 6818b269035415cfcd8aa21c eliminado del rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:53,701 [INFO] Permiso 6818b269035415cfcd8aa21c eliminado correctamente del rol 6818b9e5035415cfcd8aa231.
+2025-05-26 12:41:53,711 [INFO] Procesando PermissionRemovedFromRoleEvent para rol ID 6818b9e5035415cfcd8aa231, permiso ID 6818b269035415cfcd8aa21c
+2025-05-26 12:41:53,712 [INFO] Iniciando eliminación de permiso 6818b269035415cfcd8aa21c del rol 6818b9e5035415cfcd8aa231
+2025-05-26 12:41:53,783 [INFO] Permiso 6818b269035415cfcd8aa21c eliminado exitosamente del rol 6818b9e5035415cfcd8aa231. Documentos modificados: 1
+2025-05-26 12:41:53,783 [INFO] Permiso ID 6818b269035415cfcd8aa21c eliminado exitosamente del rol ID 6818b9e5035415cfcd8aa231

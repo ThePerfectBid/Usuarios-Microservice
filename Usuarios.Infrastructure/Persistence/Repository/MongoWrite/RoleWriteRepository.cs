@@ -84,5 +84,34 @@ namespace Usuarios.Infrastructure.Persistence.Repository.MongoWrite
         }
         #endregion
 
+        #region AddPermissionsAsync(VORoleId roleId, VORolePermissions permissions)
+        public async Task<bool> AddPermissionsAsync(VORoleId roleId, VORolePermissions permissions)
+        {
+            _logger.Info($"Iniciando actualización de permisos para el rol {roleId.Value}");
+
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId.Value);
+                var update = Builders<BsonDocument>.Update.Set("PermissionIds", new BsonArray(permissions.PermissionIds));
+
+                var result = await _rolesCollection.UpdateOneAsync(filter, update);
+
+                if (result.ModifiedCount == 0)
+                {
+                    _logger.Warn($"No se modificaron permisos para el rol {roleId.Value}");
+                    return false;
+                }
+
+                _logger.Info($"Permisos actualizados exitosamente para el rol {roleId.Value}. Documentos modificados: {result.ModifiedCount}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al actualizar permisos para el rol {roleId.Value}", ex);
+                throw;
+            }
+        }
+        #endregion
+
     }
 }

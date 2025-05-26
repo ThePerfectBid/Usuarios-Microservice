@@ -10,7 +10,7 @@ namespace Usuarios.Application.Validations
         {
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("El UserId es obligatorio.")
-                .Matches(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+                .Must(id => Guid.TryParse(id.ToString(), out _)).WithMessage("El UserId debe ser un GUID válido.");
 
             RuleFor(x => x.Action)
                 .NotEmpty().WithMessage("La acción es obligatoria.")
