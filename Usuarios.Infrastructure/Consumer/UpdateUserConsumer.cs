@@ -27,8 +27,8 @@ namespace Usuarios.Infrastructure.Consumer
                     { "_id", message.UserId.Value },
                     { "name", message.Name.Value },
                     { "lastName", message.LastName.Value },
-                    { "address", message.Address.Value },
-                    { "phone", message.Phone.Value }
+                    { "address", message.Address != null ? new BsonString(message.Address.Value) : BsonNull.Value },
+                    { "phone", message.Phone != null ? new BsonString(message.Phone.Value) : BsonNull.Value }
                 };
 
                 await _userReadRepository.UpdateAsync(bsonUser);

@@ -230,6 +230,11 @@ namespace Usuarios.Presentation.Controllers
             {
                 var query = new GetAllUsersQuery();
                 var users = await _mediator.Send(query);
+                if (users == null || !users.Any())
+                {
+                    _logger.Warn("No se encontraron usuarios.");
+                    return NotFound("No se encontraron usuarios.");
+                }
                 _logger.Info("Solicitud completada exitosamente.");
                 return Ok(users);
             }
