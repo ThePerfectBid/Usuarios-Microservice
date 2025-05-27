@@ -402,3 +402,16 @@ System.Collections.Generic.KeyNotFoundException: Usuario no encontrado.
 2025-05-26 12:41:53,712 [INFO] Iniciando eliminación de permiso 6818b269035415cfcd8aa21c del rol 6818b9e5035415cfcd8aa231
 2025-05-26 12:41:53,783 [INFO] Permiso 6818b269035415cfcd8aa21c eliminado exitosamente del rol 6818b9e5035415cfcd8aa231. Documentos modificados: 1
 2025-05-26 12:41:53,783 [INFO] Permiso ID 6818b269035415cfcd8aa21c eliminado exitosamente del rol ID 6818b9e5035415cfcd8aa231
+2025-05-26 22:18:58,551 [INFO] Iniciando solicitud GET /api/permissions/allPermissions
+2025-05-26 22:18:59,046 [INFO] Conexión a MongoDB establecida correctamente.
+2025-05-26 22:18:59,053 [INFO] Procesando consulta GetAllPermissionsQuery
+2025-05-26 22:18:59,055 [INFO] Iniciando consulta para obtener todos los permisos.
+2025-05-26 22:19:00,582 [INFO] Consulta completada exitosamente. Total permisos: 25
+2025-05-26 22:19:00,583 [INFO] Consulta completada exitosamente. Total permisos: 25
+2025-05-26 22:19:00,583 [INFO] Permisos obtenidos exitosamente. Cantidad: 25
+2025-05-26 22:19:28,104 [INFO] Recibiendo solicitud para obtener permisos del rol 6818b6ff035415cfcd8aa229
+2025-05-26 22:19:28,106 [INFO] Procesando consulta GetPermissionsByRoleIdQuery para el rol 6818b6ff035415cfcd8aa229
+2025-05-26 22:19:28,108 [INFO] Buscando permisos para el rol con ID 6818b6ff035415cfcd8aa229
+2025-05-26 22:19:28,197 [INFO] Permisos del rol 6818b6ff035415cfcd8aa229: 6818b269035415cfcd8aa21c, 6818b389035415cfcd8aa21d, 6818b3be035415cfcd8aa21e, 6818b40a035415cfcd8aa21f, 6818b4b6035415cfcd8aa220, 6818b4de035415cfcd8aa221, 6818b50d035415cfcd8aa222
+2025-05-26 22:19:28,197 [INFO] Consulta completada. Permisos del rol 6818b6ff035415cfcd8aa229: 6818b269035415cfcd8aa21c, 6818b389035415cfcd8aa21d, 6818b3be035415cfcd8aa21e, 6818b40a035415cfcd8aa21f, 6818b4b6035415cfcd8aa220, 6818b4de035415cfcd8aa221, 6818b50d035415cfcd8aa222
+2025-05-26 22:19:28,197 [INFO] Permisos obtenidos para el rol 6818b6ff035415cfcd8aa229: 6818b269035415cfcd8aa21c, 6818b389035415cfcd8aa21d, 6818b3be035415cfcd8aa21e, 6818b40a035415cfcd8aa21f, 6818b4b6035415cfcd8aa220, 6818b4de035415cfcd8aa221, 6818b50d035415cfcd8aa222

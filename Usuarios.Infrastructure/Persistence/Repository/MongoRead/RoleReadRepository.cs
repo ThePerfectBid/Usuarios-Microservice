@@ -143,5 +143,37 @@ namespace Usuarios.Infrastructure.Persistence.Repository
             }
         }
         #endregion
+
+        #region GetPermissionsByRoleIdAsync(string roleId)
+        public async Task<List<string>?> GetPermissionsByRoleIdAsync(string roleId)
+        {
+            _logger.Info($"Buscando permisos para el rol con ID {roleId}");
+
+            try
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", roleId);
+                var bsonRole = await _rolesCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (bsonRole == null)
+                {
+                    _logger.Warn($"No se encontró rol con ID {roleId}");
+                    return null;
+                }
+
+                var permissions = bsonRole.Contains("PermissionIds")
+                    ? bsonRole["PermissionIds"].AsBsonArray.Select(p => p.AsString).ToList()
+                    : new List<string>();
+
+                _logger.Info($"Permisos del rol {roleId}: {string.Join(", ", permissions)}");
+                return permissions;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error al obtener permisos del rol con ID {roleId}", ex);
+                throw;
+            }
+        }
+        #endregion
+
     }
 }

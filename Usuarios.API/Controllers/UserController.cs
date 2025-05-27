@@ -297,6 +297,53 @@ namespace Usuarios.Presentation.Controllers
         }
         #endregion
 
+        #region GetAllPermissions
+        [HttpGet("allPermissions")]
+        public async Task<IActionResult> GetAllPermissions()
+        {
+            _logger.Info("Iniciando solicitud GET /api/permissions/allPermissions");
+
+            try
+            {
+                var query = new GetAllPermissionsQuery();
+                var permissions = await _mediator.Send(query);
+
+                if (permissions == null || !permissions.Any())
+                {
+                    _logger.Warn("No se encontraron permisos en la base de datos.");
+                    return NotFound("No se encontraron permisos.");
+                }
+
+                _logger.Info($"Permisos obtenidos exitosamente. Cantidad: {permissions.Count}");
+                return Ok(permissions);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error interno al obtener permisos.", ex);
+                return StatusCode(500, "Error interno en el servidor.");
+            }
+        }
+        #endregion
+
+        #region GetPermissionsFromRole
+        [HttpGet("{roleId}/permissions")]
+        public async Task<IActionResult> GetPermissionsFromRole(string roleId)
+        {
+            _logger.Info($"Recibiendo solicitud para obtener permisos del rol {roleId}");
+
+            var permissions = await _mediator.Send(new GetPermissionsByRoleIdQuery(roleId));
+
+            if (permissions == null || !permissions.Any())
+            {
+                _logger.Warn($"No se encontraron permisos para el rol {roleId}");
+                return NotFound(new { message = $"No se encontraron permisos para el rol con ID {roleId}" });
+            }
+
+            _logger.Info($"Permisos obtenidos para el rol {roleId}: {string.Join(", ", permissions)}");
+            return Ok(permissions);
+        }
+        #endregion
+
     }
 
 }

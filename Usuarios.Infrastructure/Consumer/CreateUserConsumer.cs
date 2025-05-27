@@ -27,8 +27,8 @@ namespace Usuarios.Infrastructure.Consumer
                     { "name", message.Name },
                     { "lastName", message.LastName },
                     { "email", message.Email },
-                    { "address", message.Address },
-                    { "phone", message.Phone },
+                    { "address", message.Address != null ? new BsonString(message.Address) : BsonNull.Value },
+                    { "phone", message.Phone != null ? new BsonString(message.Phone) : BsonNull.Value },
                     { "roleId", message.RoleId }
                 };
 

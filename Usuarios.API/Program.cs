@@ -55,6 +55,7 @@ builder.Services.AddScoped<IRoleRepository, RoleWriteRepository>();
 builder.Services.AddScoped<IUserReadRepository, MongoReadUserRepository>();
 builder.Services.AddScoped<IRoleReadRepository, RoleReadRepository>();
 builder.Services.AddScoped<IUserActivityReadRepository, MongoReadUserActivityRepository>();
+builder.Services.AddScoped<IPermissionReadRepository, PermissionReadRepository>();
 
 // REGISTRA MediatR PARA TODOS LOS HANDLERS
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateUserCommandHandler).Assembly));
@@ -73,6 +74,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UserA
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserByEmailQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllRolesQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllUsersQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllPermissionsQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetPermissionsByRoleIdQueryHandler).Assembly));
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDtoValidation>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserDtoValidation>();

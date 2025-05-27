@@ -12,5 +12,6 @@ namespace Usuarios.Infrastructure.Interfaces
         Task<List<RoleDto>> GetAllAsync();  // Obtener todos los roles
         Task<bool> AddPermissionsAsync(BsonDocument role); // Modificar permisos
         Task RemovePermissionByIdAsync(string roleId, string permissionId);
+        Task<List<string>?> GetPermissionsByRoleIdAsync(string roleId);
     }
 }
