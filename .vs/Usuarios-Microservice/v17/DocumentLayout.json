@@ -1,16 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{FCD1A043-7580-4BDB-AD37-AFC42DD77D62}|Usuarios.Tests\\Usuarios.Tests.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.tests\\usuarios.infrastructure\\persistence\\repository\\mongowrite\\repository_userwrite_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCD1A043-7580-4BDB-AD37-AFC42DD77D62}|Usuarios.Tests\\Usuarios.Tests.csproj|solutionrelative:usuarios.tests\\usuarios.infrastructure\\persistence\\repository\\mongowrite\\repository_userwrite_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FCD1A043-7580-4BDB-AD37-AFC42DD77D62}|Usuarios.Tests\\Usuarios.Tests.csproj|c:\\users\\anale\\onedrive\\documentos\\ucab\\desa\\proyecto\\usuarios-microservice\\usuarios.tests\\usuarios.infrastructure\\persistence\\repository\\mongowrite\\repository_rolewrite_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCD1A043-7580-4BDB-AD37-AFC42DD77D62}|Usuarios.Tests\\Usuarios.Tests.csproj|solutionrelative:usuarios.tests\\usuarios.infrastructure\\persistence\\repository\\mongowrite\\repository_rolewrite_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -18,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -29,34 +20,8 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Repository_UserWrite_Tests.cs",
-              "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_UserWrite_Tests.cs",
-              "RelativeDocumentMoniker": "Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_UserWrite_Tests.cs",
-              "ToolTip": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_UserWrite_Tests.cs",
-              "RelativeToolTip": "Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_UserWrite_Tests.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwFsBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T03:01:14.215Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Repository_RoleWrite_Tests.cs",
-              "DocumentMoniker": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_RoleWrite_Tests.cs",
-              "RelativeDocumentMoniker": "Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_RoleWrite_Tests.cs",
-              "ToolTip": "C:\\Users\\anale\\OneDrive\\Documentos\\UCAB\\DESA\\Proyecto\\Usuarios-Microservice\\Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_RoleWrite_Tests.cs",
-              "RelativeToolTip": "Usuarios.Tests\\Usuarios.Infrastructure\\Persistence\\Repository\\MongoWrite\\Repository_RoleWrite_Tests.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAAO0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T03:00:34.491Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{da1e233c-cfa8-5021-b06c-abc3d02f44e8}"
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

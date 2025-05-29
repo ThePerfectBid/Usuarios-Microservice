@@ -31,10 +31,6 @@ XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
 var builder = WebApplication.CreateBuilder(args);
 
 Env.Load();
-// Add services to the container.
-
-// 🔹 Suscribir el manejador de eventos al dispatcher
-//eventDispatcher.Subscribe(e => new UserCreatedEventHandler().Handle((UserCreatedEvent)e));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -131,17 +127,31 @@ EndpointConvention.Map<UserRoleUpdatedEvent>(new Uri("queue:" + Environment.GetE
 EndpointConvention.Map<PermissionAddedToRoleEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_ADD_ROLE_PERMISSION")));
 EndpointConvention.Map<PermissionRemovedFromRoleEvent>(new Uri("queue:" + Environment.GetEnvironmentVariable("RABBIT_QUEUE_REMOVE_ROLE_PERMISSION")));
 
+// Configuración CORS permisiva (¡Solo para desarrollo!)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()  // Permite cualquier dominio
+            .AllowAnyMethod()  // GET, POST, PUT, DELETE, etc.
+            .AllowAnyHeader(); // Cualquier cabecera
+    });
+});
 
 var app = builder.Build();
+
+// Habilitar CORS
+app.UseCors("AllowAll");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Usuarios API v1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 
